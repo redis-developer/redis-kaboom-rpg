@@ -11,59 +11,67 @@ window.onload = function () {
   loadRoot('/');
   loadSprite('player', 'sprites/player.png');
   loadSprite('wall', 'sprites/wall.png');
+  loadSprite('key', 'sprites/key.png');
+  loadSprite('flag', 'sprites/flag.png');
   loadSprite('door', 'sprites/door.png');
+  loadSprite('lockeddoor', 'sprites/lockeddoor.png');
+
+  let keysHeld;
 
   scene('play', async (roomNumber) => { 
     const res = await fetch(`/api/room/${roomNumber}`);
     const roomDetails = await res.json();
 
-    console.log(roomDetails);
+    let popupMsg = null;
 
-    addLevel(roomDetails.layout, {
-      width: 12,
-      height: 12,
+    const showMsg = (msg) => {
+      popupMsg = add([
+        text(msg, 6),
+        pos(width() / 2, 10),
+        origin('center'),
+      ]);
+    };
+
+    const roomConf = {
+      width: roomDetails.width,
+      height: roomDetails.height,
       pos: vec2(20, 20),
-      "@": [
+      '@': [
         sprite('player'),
         'player'
       ],
-      "=": [
+      '=': [
         sprite('wall'),
         solid()
       ],
-      "1": [
-        sprite('door'),
-        'door',
-        {
-          leadsTo: roomDetails.doors['1']
-        },
+      'k': [
+        sprite('key'),
+        'key',
         solid()
       ],
-      "2": [
-        sprite('door'),
-        'door',
-        {
-          leadsTo: roomDetails.doors['2']
-        },
-        solid()
-      ],
-      "3": [
-        sprite('door'),
-        'door',
-        {
-          leadsTo: roomDetails.doors['3']
-        },
-        solid()
-      ],
-      "4": [
-        sprite('door'),
-        'door',
-        {
-          leadsTo: roomDetails.doors['4']
-        },
+      'f': [
+        sprite('flag'),
+        'flag',
         solid()
       ]
-    });
+    };
+
+    for (const doorId in roomDetails.doors) {
+      const door = roomDetails.doors[doorId];
+
+      roomConf[doorId] = [
+        sprite(door.keysRequired > 0 ? 'lockeddoor' : 'door'),
+        'door',
+        {
+          leadsTo: door.leadsTo,
+          keysRequired: door.keysRequired,
+          isEnd: door.isEnd || false
+        },
+        solid()
+      ];
+    }
+
+    addLevel(roomDetails.layout, roomConf);
 
     const player = get('player')[0];
 
@@ -76,23 +84,51 @@ window.onload = function () {
 
     for (const direction in directions) {
 		  keyPress(direction, () => {
+        if (popupMsg) {
+          destroy(popupMsg);
+          popupMsg = null;
+        }
 		  });
 		  keyDown(direction, () => {
 			  player.move(directions[direction].scale(60));
 		  });
 	  }
 
-    // add([
-    //   text(`todo: room ${roomNumber}!`, 6),
-    //   pos(width() / 2, height() / 2),
-    //   origin("center"),
-    // ]);
-
     player.overlaps('door', (d) => {
-      camShake(10);
       setTimeout(() => {
-        go('play', d.leadsTo);
+        if (d.keysRequired > keysHeld) {
+          showMsg(`You need ${d.keysRequired - keysHeld} more keys!`);
+          camShake(10);
+        } else {
+          if (d.isEnd) {
+            go('winner');
+          } else {
+            go('play', d.leadsTo);
+          }
+        }
       }, 300);
+    });
+
+    player.overlaps('key', (k) => {
+      destroy(k);
+      showMsg('You got a key!');
+      keysHeld += 1;
+    });
+
+    player.overlaps('flag', () => {
+      // Go to a random room number!
+      let angle = 0.1;
+      const timer = setInterval(() => {
+        camRot(angle);
+        angle += 0.1;
+
+        if (angle >= 6.0) {
+          camRot(0);
+          clearInterval(timer);
+          // TODO Random room number...
+          go('play', 0);
+        }
+      }, 10);
     });
 
     player.action(() => {
@@ -101,10 +137,26 @@ window.onload = function () {
   });
 
   scene('start', () => {
+    keysHeld = 0;
+
     add([
-      text("press space to begin!", 6),
+      text('press space to begin!', 6),
       pos(width() / 2, height() / 2),
-      origin("center"),
+      origin('center'),
+    ]);
+
+    keyPress('space', () => {
+      go('play', 0);
+    });
+  });
+
+  scene('winner', () => {
+    keysHeld = 0;
+
+    add([
+      text('you escaped, space restarts!', 6),
+      pos(width() / 2, height() / 2),
+      origin('center'),
     ]);
 
     keyPress('space', () => {

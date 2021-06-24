@@ -33,31 +33,54 @@ app.get('/api/room/:roomNumber', (req, res) => {
       '=          =',
       '======4====='
     ],
+    width: 12,
+    height: 12,
     doors: {
-      "1": 99,
-      "2": 99,
-      "3": 99,
-      "4": 99
+      '1': {
+        leadsTo: 99,
+        keysRequired: 0
+      },
+      '2': {
+        leadsTo: 99,
+        keysRequired: 0
+      },
+      '3': {
+        leadsTo: 99,
+        isEnd: true,
+        keysRequired: 1
+      },
+      '4': {
+        leadsTo: 99,
+        keysRequired: 0
+      }
     }
   };
 
   const otherRoomDetails = {
     layout: [ 
       '============',
-      '=          =',
-      '=          2',
-      '=          =',
+      '=     =    =',
+      '=  =f =    2',
+      '=  ====    =',
       '=          =',
       '=     @    =',
       '=          =',
-      '=          =',
-      '1          =',
-      '=          =',
+      '=     ==== =',
+      '1     =    =',
+      '=     =k   =',
       '============'
     ],
+    width: 12,
+    height: 12,
     doors: {
-      "1": 0,
-      "2": 0
+      '1': {
+        leadsTo: 0,
+        keysRequired: 0
+      },
+      '2': {
+        leadsTo: 0,
+        keysRequired: 0
+      }
     }
   };
 
