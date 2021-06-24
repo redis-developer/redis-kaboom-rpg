@@ -19,7 +19,49 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // Get details for a specified room number from Redis.
 app.get('/api/room/:roomNumber', (req, res) => {
-  res.json({ todo: true });
+  const roomDetails = {
+    layout: [ 
+      '=====1======',
+      '=          =',
+      '=          =',
+      '=          =',
+      '=          =',
+      '2     @    3',
+      '=          =',
+      '=          =',
+      '=          =',
+      '=          =',
+      '======4====='
+    ],
+    doors: {
+      "1": 99,
+      "2": 99,
+      "3": 99,
+      "4": 99
+    }
+  };
+
+  const otherRoomDetails = {
+    layout: [ 
+      '============',
+      '=          =',
+      '=          2',
+      '=          =',
+      '=          =',
+      '=     @    =',
+      '=          =',
+      '=          =',
+      '1          =',
+      '=          =',
+      '============'
+    ],
+    doors: {
+      "1": 0,
+      "2": 0
+    }
+  };
+
+  res.json(req.params.roomNumber === '0' ? roomDetails : otherRoomDetails);
 })
 
 // Start the server.

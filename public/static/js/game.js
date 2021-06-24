@@ -13,22 +13,13 @@ window.onload = function () {
   loadSprite('wall', 'sprites/wall.png');
   loadSprite('door', 'sprites/door.png');
 
-  scene('play', (roomNumber) => { 
-    const levelMap = [
-      '=====|======',
-      '=          =',
-      '=          =',
-      '=          =',
-      '=          =',
-      '|     @    |',
-      '=          =',
-      '=          =',
-      '=          =',
-      '=          =',
-      '======|=====',
-    ];
+  scene('play', async (roomNumber) => { 
+    const res = await fetch(`/api/room/${roomNumber}`);
+    const roomDetails = await res.json();
 
-    addLevel(levelMap, {
+    console.log(roomDetails);
+
+    addLevel(roomDetails.layout, {
       width: 12,
       height: 12,
       pos: vec2(20, 20),
@@ -40,9 +31,36 @@ window.onload = function () {
         sprite('wall'),
         solid()
       ],
-      "|": [
+      "1": [
         sprite('door'),
         'door',
+        {
+          leadsTo: roomDetails.doors['1']
+        },
+        solid()
+      ],
+      "2": [
+        sprite('door'),
+        'door',
+        {
+          leadsTo: roomDetails.doors['2']
+        },
+        solid()
+      ],
+      "3": [
+        sprite('door'),
+        'door',
+        {
+          leadsTo: roomDetails.doors['3']
+        },
+        solid()
+      ],
+      "4": [
+        sprite('door'),
+        'door',
+        {
+          leadsTo: roomDetails.doors['4']
+        },
         solid()
       ]
     });
@@ -64,14 +82,17 @@ window.onload = function () {
 		  });
 	  }
 
-    add([
-      text(`todo: room ${roomNumber}!`, 6),
-      pos(width() / 2, height() / 2),
-      origin("center"),
-    ]);
+    // add([
+    //   text(`todo: room ${roomNumber}!`, 6),
+    //   pos(width() / 2, height() / 2),
+    //   origin("center"),
+    // ]);
 
-    player.overlaps('door', () => {
-      alert('door');
+    player.overlaps('door', (d) => {
+      camShake(10);
+      setTimeout(() => {
+        go('play', d.leadsTo);
+      }, 300);
     });
 
     player.action(() => {
