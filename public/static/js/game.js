@@ -11,20 +11,21 @@ window.onload = function () {
   loadRoot('/');
   loadSprite('player', 'sprites/player.png');
   loadSprite('wall', 'sprites/wall.png');
+  loadSprite('door', 'sprites/door.png');
 
   scene('play', (roomNumber) => { 
     const levelMap = [
-      '============',
+      '=====|======',
       '=          =',
       '=          =',
       '=          =',
       '=          =',
-      '=     @    =',
+      '|     @    |',
       '=          =',
       '=          =',
       '=          =',
       '=          =',
-      '============',
+      '======|=====',
     ];
 
     addLevel(levelMap, {
@@ -37,6 +38,11 @@ window.onload = function () {
       ],
       "=": [
         sprite('wall'),
+        solid()
+      ],
+      "|": [
+        sprite('door'),
+        'door',
         solid()
       ]
     });
@@ -63,6 +69,10 @@ window.onload = function () {
       pos(width() / 2, height() / 2),
       origin("center"),
     ]);
+
+    player.overlaps('door', () => {
+      alert('door');
+    });
 
     player.action(() => {
       player.resolve();
