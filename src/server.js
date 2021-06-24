@@ -85,7 +85,13 @@ app.get('/api/room/:roomNumber', (req, res) => {
   };
 
   res.json(req.params.roomNumber === '0' ? roomDetails : otherRoomDetails);
-})
+});
+
+// Get details for a specified room number.
+app.get('/api/randomroom/', (req, res) => {
+  // TODO get a random room from the ones available...
+  res.json({ room: 0 });
+});
 
 // Start the server.
 app.listen(PORT, () => {

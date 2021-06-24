@@ -118,15 +118,17 @@ window.onload = function () {
     player.overlaps('flag', () => {
       // Go to a random room number!
       let angle = 0.1;
-      const timer = setInterval(() => {
+      const timer = setInterval(async () => {
         camRot(angle);
         angle += 0.1;
 
         if (angle >= 6.0) {
           camRot(0);
           clearInterval(timer);
-          // TODO Random room number...
-          go('play', 0);
+          
+          const res = await fetch(`/api/randomroom`);
+          const roomDetails = await res.json();
+          go('play', roomDetails.room);
         }
       }, 10);
     });
