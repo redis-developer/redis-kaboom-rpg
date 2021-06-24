@@ -85,8 +85,10 @@ window.onload = function () {
     for (const direction in directions) {
 		  keyPress(direction, () => {
         if (popupMsg) {
-          destroy(popupMsg);
-          popupMsg = null;
+          setTimeout(() => {
+            destroy(popupMsg);
+            popupMsg = null;
+          }, 500);
         }
 		  });
 		  keyDown(direction, () => {
