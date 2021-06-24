@@ -1,38 +1,43 @@
 window.onload = function () {
   const k = kaboom({
     global: true,
-    scale: 4,    
+    scale: 3,    
     clearColor: [0, 0, 0, 1],
     canvas: document.getElementById('game'),
-    width: 150,
-    height: 150
+    width: 180,
+    height: 180
   });
 
   loadRoot('/');
   loadSprite('player', 'sprites/player.png');
+  loadSprite('wall', 'sprites/wall.png');
 
   scene('play', (roomNumber) => { 
     const levelMap = [
-      '           ',
-      '           ',
-      '           ',
-      '           ',
-      '           ',
-      '           ',
-      '           ',
-      '           ',
-      '           ',
-      '           ',
-      '     @     ',
+      '============',
+      '=          =',
+      '=          =',
+      '=          =',
+      '=          =',
+      '=     @    =',
+      '=          =',
+      '=          =',
+      '=          =',
+      '=          =',
+      '============',
     ];
 
     addLevel(levelMap, {
-      width: 11,
-      height: 11,
+      width: 12,
+      height: 12,
       pos: vec2(20, 20),
       "@": [
         sprite('player'),
         'player'
+      ],
+      "=": [
+        sprite('wall'),
+        solid()
       ]
     });
 
@@ -49,8 +54,7 @@ window.onload = function () {
 		  keyPress(direction, () => {
 		  });
 		  keyDown(direction, () => {
-        console.log(direction);
-			  //player.move(dirs[dir].scale(60));
+			  player.move(directions[direction].scale(60));
 		  });
 	  }
 
