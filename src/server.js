@@ -38,8 +38,7 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 1,
-          keysRequired: 0
+          leadsTo: 1
         },
         '2': {
           leadsTo: 0,
@@ -47,8 +46,7 @@ app.get('/api/room/:roomNumber', (req, res) => {
           keysRequired: 3
         },
         '3': {
-          leadsTo: 3,
-          keysRequired: 0
+          leadsTo: 3
         }
       }
     },
@@ -70,12 +68,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 2,
-          keysRequired: 0
+          leadsTo: 2
         },
         '2': {
-          leadsTo: 0,
-          keysRequired: 0
+          leadsTo: 0
         }
       }
     },
@@ -97,12 +93,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 3,
-          keysRequired: 0
+          leadsTo: 3
         },
         '2': {
-          leadsTo: 1,
-          keysRequired: 0
+          leadsTo: 1
         }
       }
     },
@@ -124,16 +118,13 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 6,
-          keysRequired: 0
+          leadsTo: 6
         },
         '2': {
-          leadsTo: 4,
-          keysRequired: 0
+          leadsTo: 4
         },
         '3': {
-          leadsTo: 2,
-          keysRequired: 0
+          leadsTo: 2
         },
         '4': {
           leadsTo: 28,
@@ -159,12 +150,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 5,
-          keysRequired: 0
+          leadsTo: 5
         },
         '2': {
-          leadsTo: 3,
-          keysRequired: 0
+          leadsTo: 3
         }
       }
     },
@@ -186,8 +175,7 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 4,
-          keysRequired: 0
+          leadsTo: 4
         }
       }
     },
@@ -209,12 +197,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 7,
-          keysRequired: 0
+          leadsTo: 7
         },
         '2': {
-          leadsTo: 3,
-          keysRequired: 0
+          leadsTo: 3
         }
       }
     },
@@ -236,16 +222,13 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 8,
-          keysRequired: 0
+          leadsTo: 8
         },
         '2': {
-          leadsTo: 14,
-          keysRequired: 0
+          leadsTo: 14
         },
         '3': {
-          leadsTo: 6,
-          keysRequired: 0
+          leadsTo: 6
         }
       }
     },
@@ -267,12 +250,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 9,
-          keysRequired: 0
+          leadsTo: 9
         },
         '2': {
-          leadsTo: 7,
-          keysRequired: 0
+          leadsTo: 7
         }
       }
     },
@@ -294,12 +275,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 10,
-          keysRequired: 0
+          leadsTo: 10
         },
         '2': {
-          leadsTo: 8,
-          keysRequired: 0
+          leadsTo: 8
         }
       }
     },
@@ -321,12 +300,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 11,
-          keysRequired: 0
+          leadsTo: 11
         },
         '2': {
-          leadsTo: 9,
-          keysRequired: 0
+          leadsTo: 9
         }
       }
     },
@@ -348,12 +325,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 10,
-          keysRequired: 0
+          leadsTo: 10
         },
         '2': {
-          leadsTo: 12,
-          keysRequired: 0
+          leadsTo: 12
         }
       }
     },
@@ -375,12 +350,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 11,
-          keysRequired: 0
+          leadsTo: 11
         },
         '2': {
-          leadsTo: 13,
-          keysRequired: 0
+          leadsTo: 13
         }
       }
     },
@@ -402,16 +375,13 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 12,
-          keysRequired: 0
+          leadsTo: 12
         },
         '2': {
-          leadsTo: 15,
-          keysRequired: 0
+          leadsTo: 15
         },
         '3': {
-          leadsTo: 14,
-          keysRequired: 0
+          leadsTo: 14
         }
       }
     },
@@ -433,12 +403,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 13,
-          keysRequired: 0
+          leadsTo: 13
         },
         '2': {
-          leadsTo: 7,
-          keysRequired: 0
+          leadsTo: 7
         }
       }
     },
@@ -460,12 +428,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 16,
-          keysRequired: 0
+          leadsTo: 16
         },
         '2': {
-          leadsTo: 13,
-          keysRequired: 0
+          leadsTo: 13
         }
       }
     },
@@ -487,16 +453,13 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 17,
-          keysRequired: 0
+          leadsTo: 17
         },
         '2': {
-          leadsTo: 15,
-          keysRequired: 0
+          leadsTo: 15
         },
         '3': {
-          leadsTo: 20,
-          keysRequired: 0
+          leadsTo: 20
         }
       }
     },
@@ -518,12 +481,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 18,
-          keysRequired: 0
+          leadsTo: 18
         },
         '2': {
-          leadsTo: 16,
-          keysRequired: 0
+          leadsTo: 16
         }
       }
     },
@@ -545,8 +506,7 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 17,
-          keysRequired: 0
+          leadsTo: 17
         },
         '2': {
           leadsTo: 19,
@@ -572,8 +532,7 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 18,
-          keysRequired: 0
+          leadsTo: 18
         }
       }
     },
@@ -595,12 +554,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 16,
-          keysRequired: 0
+          leadsTo: 16
         },
         '2': {
-          leadsTo: 21,
-          keysRequired: 0
+          leadsTo: 21
         }
       }
     },
@@ -622,12 +579,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 20,
-          keysRequired: 0
+          leadsTo: 20
         },
         '2': {
-          leadsTo: 22,
-          keysRequired: 0
+          leadsTo: 22
         }
       }
     },
@@ -649,12 +604,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 21,
-          keysRequired: 0
+          leadsTo: 21
         },
         '2': {
-          leadsTo: 23,
-          keysRequired: 0
+          leadsTo: 23
         }
       }
     },
@@ -676,12 +629,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 22,
-          keysRequired: 0
+          leadsTo: 22
         },
         '2': {
-          leadsTo: 24,
-          keysRequired: 0
+          leadsTo: 24
         }
       }
     },
@@ -703,12 +654,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 23,
-          keysRequired: 0
+          leadsTo: 23
         },
         '2': {
-          leadsTo: 25,
-          keysRequired: 0
+          leadsTo: 25
         }
       }
     },
@@ -730,12 +679,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 24,
-          keysRequired: 0
+          leadsTo: 24
         },
         '2': {
-          leadsTo: 26,
-          keysRequired: 0
+          leadsTo: 26
         }
       }
     },
@@ -757,12 +704,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 25,
-          keysRequired: 0
+          leadsTo: 25
         },
         '2': {
-          leadsTo: 27,
-          keysRequired: 0
+          leadsTo: 27
         }
       }
     },
@@ -788,12 +733,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
           keysRequired: 2
         },
         '2': {
-          leadsTo: 26,
-          keysRequired: 0
+          leadsTo: 26
         },
         '3': {
-          leadsTo: 29,
-          keysRequired: 0
+          leadsTo: 29
         }
       }
     },
@@ -842,16 +785,13 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 27,
-          keysRequired: 0
+          leadsTo: 27
         },
         '2': {
-          leadsTo: 31,
-          keysRequired: 0
+          leadsTo: 31
         },
         '3': {
-          leadsTo: 30,
-          keysRequired: 0
+          leadsTo: 30
         }
       }
     },
@@ -873,8 +813,7 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 29,
-          keysRequired: 0
+          leadsTo: 29
         }
       }
     },
@@ -896,12 +835,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
       height: 12,
       doors: {
         '1': {
-          leadsTo: 0,
-          keysRequired: 0
+          leadsTo: 0
         },
         '2': {
-          leadsTo: 29,
-          keysRequired: 0
+          leadsTo: 29
         }
       }
     },
