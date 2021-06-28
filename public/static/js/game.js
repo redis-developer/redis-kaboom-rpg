@@ -23,14 +23,27 @@ window.onload = function () {
     const roomDetails = await res.json();
 
     let popupMsg = null;
+    let keysHeldMsg = null;
 
     const showMsg = (msg) => {
       popupMsg = add([
         text(msg, 6),
         pos(width() / 2, 10),
-        origin('center'),
+        origin('center')
       ]);
     };
+
+    const updateKeysHeld = () => {
+      if (keysHeldMsg) {
+        destroy(keysHeldMsg);
+      }
+
+      keysHeldMsg = add([
+        text(`Keys held: ${keysHeld.length}`, 6),
+        pos(55, 150),
+        origin('center')
+      ]);
+    }
 
     const roomConf = {
       width: roomDetails.layout[0].length,
@@ -72,6 +85,7 @@ window.onload = function () {
     }
 
     addLevel(roomDetails.layout, roomConf);
+    updateKeysHeld();
 
     // Delete any key in this room if the player already collected it.
     const keys = get('key');
@@ -121,6 +135,7 @@ window.onload = function () {
       destroy(k);
       showMsg('You got a key!');
       keysHeld.push(roomNumber);
+      updateKeysHeld();
     });
 
     player.overlaps('flag', () => {
