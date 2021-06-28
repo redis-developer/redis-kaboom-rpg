@@ -16,7 +16,7 @@ window.onload = function () {
   loadSprite('door', 'sprites/door.png');
   loadSprite('lockeddoor', 'sprites/lockeddoor.png');
 
-  let keysHeld;
+  let keysHeld = [];
 
   scene('play', async (roomNumber) => { 
     const res = await fetch(`/api/room/${roomNumber}`);
@@ -73,6 +73,12 @@ window.onload = function () {
 
     addLevel(roomDetails.layout, roomConf);
 
+    // Delete any key in this room if the player already collected it.
+    const keys = get('key');
+    if (keys.length > 0 && keysHeld.includes(roomNumber)) {
+      destroy(keys[0]);
+    }
+
     const player = get('player')[0];
 
     const directions = {
@@ -98,8 +104,8 @@ window.onload = function () {
 
     player.overlaps('door', (d) => {
       setTimeout(() => {
-        if (d.keysRequired && d.keysRequired > keysHeld) {
-          showMsg(`You need ${d.keysRequired - keysHeld} more keys!`);
+        if (d.keysRequired && d.keysRequired > keysHeld.length) {
+          showMsg(`You need ${d.keysRequired - keysHeld.length} more keys!`);
           camShake(10);
         } else {
           if (d.isEnd) {
@@ -114,7 +120,7 @@ window.onload = function () {
     player.overlaps('key', (k) => {
       destroy(k);
       showMsg('You got a key!');
-      keysHeld += 1;
+      keysHeld.push(roomNumber);
     });
 
     player.overlaps('flag', () => {
@@ -141,7 +147,7 @@ window.onload = function () {
   });
 
   scene('start', () => {
-    keysHeld = 0;
+    keysHeld = [];
 
     add([
       text('press space to begin!', 6),
@@ -155,7 +161,7 @@ window.onload = function () {
   });
 
   scene('winner', () => {
-    keysHeld = 0;
+    keysHeld = [];
 
     add([
       text('you escaped, space restarts!', 6),
