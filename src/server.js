@@ -14,11 +14,28 @@ const redis = new Redis({
   password: REDIS_PASSWORD 
 });
 
+const getRedisKeyName = n => `kaboom:${n}`;
+
 // Serve the front end statically from the 'public' folder.
 app.use(express.static(path.join(__dirname, '../public')));
 
+// Start a new game.
+app.get('/api/newgame', async (req, res) => {
+  const gameId = Date.now();
+  const gameKey = getRedisKeyName(gameId);
+
+  // Start a new game and set a long expiry in case 
+  // the user abandons it.
+  await redis.xadd(gameKey, '*', 'event', 'start');
+  redis.expire(gameKey, 86400);
+
+  res.json({ gameId: gameId });
+});
+
 // Get details for a specified room number from Redis.
-app.get('/api/room/:roomNumber', (req, res) => {
+app.get('/api/room/:gameId/:roomNumber', (req, res) => {
+  const { gameId, roomNumber }  = req.params;
+
   const roomDetails = {
     '0': {
       layout: [ 
@@ -780,7 +797,10 @@ app.get('/api/room/:roomNumber', (req, res) => {
     },
   };
 
-  res.json(roomDetails[req.params.roomNumber]);
+  // Store this movement in Redis.
+  redis.xadd(getRedisKeyName(gameId), '*', 'roomEntry', roomNumber);
+
+  res.json(roomDetails[roomNumber]);
 });
 
 // Get details for a specified room number.
@@ -788,6 +808,17 @@ app.get('/api/randomroom/', (req, res) => {
   // TODO get a random room from the ones available... 0-31 right now,
   // do this properly from the database later...
   res.json({ room: Math.floor(Math.random() * 31) });
+});
+
+// End the current game and get the stats.
+app.get('/api/endgame/:gameId', (req, res) => {
+  const { gameId } = req.params;
+
+  // GET THE NUMBER OF ROOM CHANGES USED.
+  // CALCULATE THE OVERALL ELAPSED GAME TIME.
+  // DELETE THE STREAM.
+
+  //redis.del(getRedisKeyName(gameId));
 });
 
 // Start the server.

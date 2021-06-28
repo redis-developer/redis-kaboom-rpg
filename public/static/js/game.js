@@ -17,9 +17,10 @@ window.onload = function () {
   loadSprite('lockeddoor', 'sprites/lockeddoor.png');
 
   let keysHeld = [];
+  let gameId;
 
   scene('play', async (roomNumber) => { 
-    const res = await fetch(`/api/room/${roomNumber}`);
+    const res = await fetch(`/api/room/${gameId}/${roomNumber}`);
     const roomDetails = await res.json();
 
     let popupMsg = null;
@@ -125,6 +126,7 @@ window.onload = function () {
           camShake(10);
         } else {
           if (d.isEnd) {
+            // TODO FIRE GAME OVER EVENT AND WAIT FOR REPLY.
             go('winner');
           } else {
             go('play', d.leadsTo);
@@ -153,6 +155,7 @@ window.onload = function () {
           
           const res = await fetch(`/api/randomroom`);
           const roomDetails = await res.json();
+
           go('play', roomDetails.room);
         }
       }, 10);
@@ -162,6 +165,14 @@ window.onload = function () {
       player.resolve();
     });
   });
+
+  const newGame = async () => {
+    const res = await fetch('/api/newgame');
+    const newGameResponse = await res.json();
+
+    gameId = newGameResponse.gameId;
+    go('play', 0);
+  }
 
   scene('start', () => {
     keysHeld = [];
@@ -173,12 +184,14 @@ window.onload = function () {
     ]);
 
     keyPress('space', () => {
-      go('play', 0);
+      newGame();
     });
   });
 
   scene('winner', () => {
     keysHeld = [];
+
+    // TODO GET THE GAME STATS. 
 
     add([
       text('you escaped, space restarts!', 6),
@@ -187,7 +200,7 @@ window.onload = function () {
     ]);
 
     keyPress('space', () => {
-      go('play', 0);
+      newGame();
     });
   });
 
