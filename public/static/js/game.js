@@ -33,8 +33,8 @@ window.onload = function () {
     };
 
     const roomConf = {
-      width: roomDetails.width,
-      height: roomDetails.height,
+      width: roomDetails.layout[0].length,
+      height: roomDetails.layout.length,
       pos: vec2(20, 20),
       '@': [
         sprite('player'),

@@ -34,8 +34,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======3====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 1
@@ -64,8 +62,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 2
@@ -89,8 +85,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 3
@@ -114,8 +108,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=      =   =',
         '======4====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 6
@@ -146,8 +138,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 5
@@ -171,8 +161,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=  k       =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 4
@@ -193,8 +181,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 7
@@ -218,8 +204,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======3====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 8
@@ -246,8 +230,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 9
@@ -271,8 +253,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 10
@@ -296,8 +276,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 11
@@ -321,8 +299,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 10
@@ -346,8 +322,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 11
@@ -371,8 +345,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 12
@@ -399,8 +371,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 13
@@ -424,8 +394,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 16
@@ -449,8 +417,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '=====3======'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 17
@@ -477,8 +443,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 18
@@ -502,8 +466,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '=====2======'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 17
@@ -528,8 +490,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 18
@@ -550,8 +510,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '=====2======'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 16
@@ -575,8 +533,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 20
@@ -600,8 +556,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 21
@@ -625,8 +579,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 22
@@ -650,8 +602,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 23
@@ -675,8 +625,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 24
@@ -700,8 +648,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=   ====   =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 25
@@ -725,8 +671,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 28,
@@ -754,8 +698,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '======2====='
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 3,
@@ -781,8 +723,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=  f       =',
         '=====3======'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 27
@@ -809,8 +749,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=          =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 29
@@ -831,8 +769,6 @@ app.get('/api/room/:roomNumber', (req, res) => {
         '=     =    =',
         '============'
       ],
-      width: 12,
-      height: 12,
       doors: {
         '1': {
           leadsTo: 0
