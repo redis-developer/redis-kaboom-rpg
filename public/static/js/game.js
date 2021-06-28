@@ -126,7 +126,6 @@ window.onload = function () {
           camShake(10);
         } else {
           if (d.isEnd) {
-            // TODO FIRE GAME OVER EVENT AND WAIT FOR REPLY.
             go('winner');
           } else {
             go('play', d.leadsTo);
