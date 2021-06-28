@@ -811,14 +811,20 @@ app.get('/api/randomroom/', (req, res) => {
 });
 
 // End the current game and get the stats.
-app.get('/api/endgame/:gameId', (req, res) => {
+app.get('/api/endgame/:gameId', async (req, res) => {
   const { gameId } = req.params;
+  const keyName = getRedisKeyName(gameId);
 
-  // GET THE NUMBER OF ROOM CHANGES USED.
+  // How many times did they enter a room (length of stream minus 1 for
+  // the start event).
+  const roomEntries = await redis.xlen(keyName) - 1;
+
   // CALCULATE THE OVERALL ELAPSED GAME TIME.
-  // DELETE THE STREAM.
 
-  //redis.del(getRedisKeyName(gameId));
+  // Tidy up, delete the stream we don't need it any more.
+  redis.del(getRedisKeyName(gameId));
+
+  res.json({ roomEntries, elapsedTime: 0 });
 });
 
 // Start the server.
