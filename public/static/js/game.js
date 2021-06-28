@@ -152,7 +152,7 @@ window.onload = function () {
           camRot(0);
           clearInterval(timer);
           
-          const res = await fetch(`/api/randomroom`);
+          const res = await fetch('/api/randomroom');
           const roomDetails = await res.json();
 
           go('play', roomDetails.room);
@@ -187,13 +187,14 @@ window.onload = function () {
     });
   });
 
-  scene('winner', () => {
+  scene('winner', async () => {
     keysHeld = [];
 
-    // TODO GET THE GAME STATS. 
+    const res = await fetch(`/api/endgame/${gameId}`);
+    const { roomEntries, elapsedTime } = await res.json();
 
     add([
-      text('you escaped, space restarts!', 6),
+      text(`you escaped in ${roomEntries} moves / ${elapsedTime} seconds\nspace restarts!`, 6),
       pos(width() / 2, height() / 2),
       origin('center'),
     ]);
