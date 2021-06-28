@@ -98,7 +98,7 @@ window.onload = function () {
 
     player.overlaps('door', (d) => {
       setTimeout(() => {
-        if (d.keysRequired > keysHeld) {
+        if (d.keysRequired && d.keysRequired > keysHeld) {
           showMsg(`You need ${d.keysRequired - keysHeld} more keys!`);
           camShake(10);
         } else {
