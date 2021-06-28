@@ -105,10 +105,12 @@ window.onload = function () {
     for (const direction in directions) {
 		  keyPress(direction, () => {
         if (popupMsg) {
-          setTimeout(() => {
-            destroy(popupMsg);
-            popupMsg = null;
-          }, 500);
+          wait(0.5, () => {
+            if (popupMsg) {
+              destroy(popupMsg);
+              popupMsg = null;
+            }
+          });
         }
 		  });
 		  keyDown(direction, () => {
@@ -117,7 +119,7 @@ window.onload = function () {
 	  }
 
     player.overlaps('door', (d) => {
-      setTimeout(() => {
+      wait(0.3, ()=> {
         if (d.keysRequired && d.keysRequired > keysHeld.length) {
           showMsg(`You need ${d.keysRequired - keysHeld.length} more keys!`);
           camShake(10);
@@ -128,7 +130,7 @@ window.onload = function () {
             go('play', d.leadsTo);
           }
         }
-      }, 300);
+      });
     });
 
     player.overlaps('key', (k) => {
