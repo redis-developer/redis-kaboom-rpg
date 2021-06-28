@@ -819,12 +819,23 @@ app.get('/api/endgame/:gameId', async (req, res) => {
   // the start event).
   const roomEntries = await redis.xlen(keyName) - 1;
 
-  // CALCULATE THE OVERALL ELAPSED GAME TIME.
+  // Get the first and last entries in the stream, and the overall
+  // elapsed game time will be the difference between the timestamp
+  // components of their IDs.
+  const streamStartAndEnd = await Promise.all([
+    redis.xrange(keyName, '-', '+', 'COUNT', 1),
+    redis.xrevrange(keyName, '+', '-', 'COUNT', 1),
+  ]);
+
+  // Parse out the timestamps from the Redis return values.
+  const startTimeStamp = parseInt(streamStartAndEnd[0][0][0].split('-')[0], 10);
+  const endTimeStamp = parseInt(streamStartAndEnd[1][0][0].split('-')[0], 10);
+  const elapsedTime = Math.floor((endTimeStamp - startTimeStamp) / 1000);
 
   // Tidy up, delete the stream we don't need it any more.
   redis.del(getRedisKeyName(gameId));
 
-  res.json({ roomEntries, elapsedTime: 0 });
+  res.json({ roomEntries, elapsedTime });
 });
 
 // Start the server.
