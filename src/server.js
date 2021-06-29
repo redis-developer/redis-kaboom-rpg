@@ -16,9 +16,6 @@ const redis = new Redis({
 
 const getRedisKeyName = n => `kaboom:${n}`;
 
-// TEMPORARY UNTIL THIS COMES FROM REDIS
-const gameMap = require('../game_map.json');
-
 // Serve the front end statically from the 'public' folder.
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -36,13 +33,16 @@ app.get('/api/newgame', async (req, res) => {
 });
 
 // Get details for a specified room number from Redis.
-app.get('/api/room/:gameId/:roomNumber', (req, res) => {
+app.get('/api/room/:gameId/:roomNumber', async (req, res) => {
   const { gameId, roomNumber }  = req.params;
 
   // Store this movement in Redis.
   redis.xadd(getRedisKeyName(gameId), '*', 'roomEntry', roomNumber);
 
-  res.json(gameMap[roomNumber]);
+  // Get the room details for this room.
+  const roomDetails = JSON.parse(await redis.call('JSON.GET', getRedisKeyName('rooms'), `.[${roomNumber}]`));
+
+  res.json(roomDetails);
 });
 
 // Get details for a specified room number.
