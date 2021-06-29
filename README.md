@@ -27,6 +27,8 @@ Creating redis_kaboom ... done
 $
 ```
 
+Redis will create a folder `redisdata` and write the append only file there, so your data is persisted if you stop and restart the Docker container.
+
 ### Loading the Game Data
 
 TODO (nothing to do yet as the data is still hard coded!).
