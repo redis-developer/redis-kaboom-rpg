@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node ./node_modules/nodemon/bin/nodemon.js",
+    "load": "node src/data_loader.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
