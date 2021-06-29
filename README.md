@@ -31,7 +31,17 @@ Redis will create a folder `redisdata` and write the append only file there, so 
 
 ### Loading the Game Data
 
-TODO (nothing to do yet as the data is still hard coded!).
+Next, load the game map into Redis.  This stores the map data in the `game_map.json` file in Redis, using RedisJSON:
+
+```bash
+$ npm run load
+
+> redis-kaboom-rpg@1.0.0 load
+> node src/data_loader.js
+
+Data loaded!
+$
+```
 
 ### Starting the Server
 
