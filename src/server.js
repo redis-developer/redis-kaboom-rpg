@@ -36,8 +36,8 @@ app.get('/api/newgame', async (req, res) => {
 app.get('/api/room/:gameId/:roomNumber', (req, res) => {
   const { gameId, roomNumber }  = req.params;
 
-  const roomDetails = {
-    '0': {
+  const roomDetails = [
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -65,7 +65,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '1': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -88,7 +88,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '2': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -111,7 +111,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '3': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -141,7 +141,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '4': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -164,7 +164,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '5': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -184,7 +184,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '6': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -207,7 +207,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '7': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -233,7 +233,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '8': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -256,7 +256,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '9': {
+    {
       layout: [ 
         '============',
         '=   k =    =',
@@ -279,7 +279,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '10': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -302,7 +302,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '11': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -325,7 +325,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '12': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -348,7 +348,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '13': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -374,7 +374,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '14': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -397,7 +397,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '15': {
+    {
       layout: [ 
         '============',
         '=    =     =',
@@ -420,7 +420,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '16': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -446,7 +446,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '17': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -469,7 +469,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '18': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -493,7 +493,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '19': {
+    {
       layout: [ 
         '=====1======',
         '=       =  =',
@@ -513,7 +513,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '20': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -536,7 +536,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '21': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -559,7 +559,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '22': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -582,7 +582,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '23': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -605,7 +605,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '24': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -628,7 +628,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '25': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -651,7 +651,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '26': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -674,7 +674,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '27': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -701,7 +701,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '28': {
+    {
       layout: [ 
         '=====1======',
         '=      =   =',
@@ -726,7 +726,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '29': {
+    {
       layout: [ 
         '============',
         '=          =',
@@ -752,7 +752,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '30': {
+    {
       layout: [ 
         '=====1======',
         '=          =',
@@ -772,7 +772,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-    '31': {
+    {
       layout: [ 
         '=====1======',
         '= =   =    =',
@@ -795,7 +795,7 @@ app.get('/api/room/:gameId/:roomNumber', (req, res) => {
         }
       }
     },
-  };
+  ];
 
   // Store this movement in Redis.
   redis.xadd(getRedisKeyName(gameId), '*', 'roomEntry', roomNumber);
