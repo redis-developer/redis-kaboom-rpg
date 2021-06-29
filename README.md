@@ -1,6 +1,6 @@
 # Redis Kaboom RPG Type Game
 
-This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).
+This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).  It makes use of the [RedisJSON](https://redisjson.io) module from [Redis Labs](https://redislabs.com).
 
 ## Setup
 
@@ -38,6 +38,29 @@ $ npm run dev
 Once the server is running, point your browser at `http://localhost:8080`.
 
 This starts the server using [nodemon](https://www.npmjs.com/package/nodemon), so any changes to the source code files will restart the server for you.
+
+If the server logs an error similar to this one, then Redis isn't running on the expected / configured host / port:
+
+```
+[ioredis] Unhandled error event: Error: connect ECONNREFUSED 127.0.0.1:6379
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1146:16)
+```
+
+### Stopping the Server
+
+To stop the Node.js server, press Ctrl-C.
+
+### Stopping Redis (Docker)
+
+If you started Redis using `docker-compose`, stop it as follows when you are done playing the game:
+
+```bash
+$ docker-compose down
+Stopping redis_kaboom ... done
+Removing redis_kaboom ... done
+Removing network redis-kaboom-rpg_default
+$
+```
 
 ### Playing the Game
 
