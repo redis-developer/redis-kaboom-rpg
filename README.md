@@ -5,7 +5,7 @@ This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), Nod
 ## Clone Repo and Install Dependencies
 
 ```bash
-$ git clone TODO
+$ git clone https://github.com/simonprickett/redis-kaboom-rpg.git
 $ cd redis-kaboom-rpg
 $ npm install
 ```
