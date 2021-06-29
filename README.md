@@ -1,6 +1,6 @@
 # Redis Kaboom RPG Type Game
 
-This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), Node.js and [Redis](https://redis.io).
+This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).
 
 ## Setup
 
@@ -36,6 +36,8 @@ $ npm run dev
 ```
 
 Once the server is running, point your browser at `http://localhost:8080`.
+
+This starts the server using [nodemon](https://www.npmjs.com/package/nodemon), so any changes to the source code files will restart the server for you.
 
 ### Playing the Game
 
