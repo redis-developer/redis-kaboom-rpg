@@ -40,8 +40,8 @@ window.onload = function () {
       }
 
       keysHeldMsg = add([
-        text(`Keys held: ${keysHeld.length}`, 6),
-        pos(55, 150),
+        text(`Room ${roomNumber}. Keys held: ${keysHeld.length}`, 6),
+        pos(80, 150),
         origin('center')
       ]);
     }
