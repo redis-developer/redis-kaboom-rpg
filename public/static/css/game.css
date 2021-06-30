@@ -1,0 +1,15 @@
+body {
+  background-color: #000000;
+}
+
+p {
+  color: #ffffff;
+}
+
+a:link, a:visited {
+  color: #ffff00;
+}
+
+.title {
+  color: #ffffff;
+}
