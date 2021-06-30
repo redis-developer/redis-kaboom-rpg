@@ -24,12 +24,34 @@ app.use(express.static(path.join(__dirname, '../public')));
 // Start a new game.
 app.get('/api/newgame', async (req, res) => {
   const gameId = Date.now();
-  const gameKey = getRedisKeyName(gameId);
+  const gameMovesKey = getRedisKeyName(`moves:${gameId}`);
 
-  // Start a new game and set a long expiry in case 
+  // Start a new stream for this game and set a long expiry in case 
   // the user abandons it.
-  await redis.xadd(gameKey, '*', 'event', 'start');
-  redis.expire(gameKey, 86400);
+  await redis.xadd(gameMovesKey, '*', 'event', 'start');
+  redis.expire(gameMovesKey, 86400);
+
+  // Pick 3 random room numbers to place the keys in for this game.
+  let keysPlaced = 0;
+
+  // We'll store these in a Redis set, so we'll need a key for that...
+  const keyLocationsKey = getRedisKeyName(`keylocations:${gameId}`);
+
+  // Figure out how many rooms are available so we know what the range
+  // of room numbers to pick from is.
+  const numRooms = await redis.call('JSON.ARRLEN', ROOM_KEY_NAME, '.');
+
+  do {
+    const roomNumber = Math.floor(Math.random() * (numRooms - 1));
+    await redis.sadd(keyLocationsKey, roomNumber);
+    keysPlaced = await redis.scard(keyLocationsKey);
+  } while (keysPlaced < 3);
+
+  // Set a long expiry on the key locations key in case the user
+  // abandons the game.
+  redis.expire(keyLocationsKey, 86400);
+
+  console.log(`Started game ${gameId}.`);
 
   res.json({ gameId: gameId });
 });
@@ -39,10 +61,19 @@ app.get('/api/room/:gameId/:roomNumber', async (req, res) => {
   const { gameId, roomNumber }  = req.params;
 
   // Store this movement in Redis.
-  redis.xadd(getRedisKeyName(gameId), '*', 'roomEntry', roomNumber);
+  redis.xadd(getRedisKeyName(`moves:${gameId}`), '*', 'roomEntry', roomNumber);
 
   // Get the room details for this room.
   const roomDetails = JSON.parse(await redis.call('JSON.GET', ROOM_KEY_NAME, `.[${roomNumber}]`));
+
+  // Does this room have a key in it for this specific game?
+  const roomHasKey = await redis.sismember(getRedisKeyName(`keylocations:${gameId}`), roomNumber);
+  
+  if (roomHasKey === 0) {
+    // No key here, so remove the 'k' placeholder from the room map.
+    // String.replaceAll not available until Node 15...
+    roomDetails.layout = roomDetails.layout.map(row => row.split('k').join(' '));
+  }
 
   res.json(roomDetails);
 });
@@ -59,18 +90,18 @@ app.get('/api/randomroom/', async (req, res) => {
 // End the current game and get the stats.
 app.get('/api/endgame/:gameId', async (req, res) => {
   const { gameId } = req.params;
-  const keyName = getRedisKeyName(gameId);
+  const gameMovesKey = getRedisKeyName(`moves:${gameId}`);
 
   // How many times did they enter a room (length of stream minus 1 for
   // the start event).
-  const roomEntries = await redis.xlen(keyName) - 1;
+  const roomEntries = await redis.xlen(gameMovesKey) - 1;
 
   // Get the first and last entries in the stream, and the overall
   // elapsed game time will be the difference between the timestamp
   // components of their IDs.
   const streamStartAndEnd = await Promise.all([
-    redis.xrange(keyName, '-', '+', 'COUNT', 1),
-    redis.xrevrange(keyName, '+', '-', 'COUNT', 1),
+    redis.xrange(gameMovesKey, '-', '+', 'COUNT', 1),
+    redis.xrevrange(gameMovesKey, '+', '-', 'COUNT', 1),
   ]);
 
   // Parse out the timestamps from the Redis return values.
@@ -78,8 +109,11 @@ app.get('/api/endgame/:gameId', async (req, res) => {
   const endTimeStamp = parseInt(streamStartAndEnd[1][0][0].split('-')[0], 10);
   const elapsedTime = Math.floor((endTimeStamp - startTimeStamp) / 1000);
 
-  // Tidy up, delete the stream we don't need it any more.
-  redis.del(getRedisKeyName(gameId));
+  // Tidy up, delete the stream and key locations keys as 
+  // we don't need them any more.
+  redis.del(gameMovesKey, getRedisKeyName(`keylocations:${gameId}`));
+
+  console.log(`Game ${gameId} has ended.`);
 
   res.json({ roomEntries, elapsedTime });
 });
