@@ -16,6 +16,8 @@ const redis = new Redis({
 
 const getRedisKeyName = n => `kaboom:${n}`;
 
+const ROOM_KEY_NAME = getRedisKeyName('rooms');
+
 // Serve the front end statically from the 'public' folder.
 app.use(express.static(path.join(__dirname, '../public')));
 
@@ -40,16 +42,18 @@ app.get('/api/room/:gameId/:roomNumber', async (req, res) => {
   redis.xadd(getRedisKeyName(gameId), '*', 'roomEntry', roomNumber);
 
   // Get the room details for this room.
-  const roomDetails = JSON.parse(await redis.call('JSON.GET', getRedisKeyName('rooms'), `.[${roomNumber}]`));
+  const roomDetails = JSON.parse(await redis.call('JSON.GET', ROOM_KEY_NAME, `.[${roomNumber}]`));
 
   res.json(roomDetails);
 });
 
 // Get details for a specified room number.
-app.get('/api/randomroom/', (req, res) => {
-  // TODO get a random room from the ones available... 0-31 right now,
-  // do this properly from the database later...
-  res.json({ room: Math.floor(Math.random() * 31) });
+app.get('/api/randomroom/', async (req, res) => {
+  // Figure out how many rooms are available.
+  const numRooms = await redis.call('JSON.ARRLEN', ROOM_KEY_NAME, '.');
+
+  // Get a random number from room 0 to room (numRooms - 1).
+  res.json({ room: Math.floor(Math.random() * (numRooms - 1)) });
 });
 
 // End the current game and get the stats.
