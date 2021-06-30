@@ -194,7 +194,7 @@ window.onload = function () {
     const { roomEntries, elapsedTime } = await res.json();
 
     add([
-      text(`you escaped in ${roomEntries} moves / ${elapsedTime} seconds\nspace restarts!`, 6),
+      text(`you escaped in:\n\n${roomEntries} moves.\n\n${elapsedTime} seconds.\n\nspace restarts!`, 6),
       pos(width() / 2, height() / 2),
       origin('center'),
     ]);
