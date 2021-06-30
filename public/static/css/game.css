@@ -13,3 +13,9 @@ a:link, a:visited {
 .title {
   color: #ffffff;
 }
+
+.canvas-holder {
+  width: 100%; 
+  text-align:center; 
+  margin: auto; 
+}
