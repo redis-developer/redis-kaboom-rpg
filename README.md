@@ -6,7 +6,7 @@ TODO GIF OF THE GAME...
 
 ## Setup
 
-To run this game, you'll need [Docker](https://www.docker.com/) (or a local Redis instance, version 5 or higher) and [Node.js](https://nodejs.org/) (use the current LTS version).  First, clone the repo and install the dependencies:
+To run this game, you'll need [Docker](https://www.docker.com/) (or a local Redis instance, version 5 or higher with the RedisJSON module installed) and [Node.js](https://nodejs.org/) (use the current LTS version).  First, clone the repo and install the dependencies:
 
 ```bash
 $ git clone https://github.com/simonprickett/redis-kaboom-rpg.git
@@ -16,9 +16,9 @@ $ npm install
 
 ### Redis Setup
 
-This game uses Redis as a data store.  The code assumes that Redis is running on localhost port 6379 unless you provide an alternative Redis host and port by setting the `REDIS_HOST` and `REDIS_PORT` environment variables.  If your Redis instance requires a password, supply that in the `REDIS_PASSWORD` environment variable.
+This game uses Redis as a data store.  The code assumes that Redis is running on localhost port 6379 unless you provide an alternative Redis host and port by setting the `REDIS_HOST` and `REDIS_PORT` environment variables.  If your Redis instance requires a password, supply that in the `REDIS_PASSWORD` environment variable.  You'll need to have the RedisJSON module installed.
 
-You can also use Docker to set up Redis:
+You can also use Docker to get a Redis instance with RedisJSON:
 
 ```bash
 $ docker-compose up -d
@@ -27,7 +27,7 @@ Creating redis_kaboom ... done
 $
 ```
 
-Redis will create a folder `redisdata` and write the append only file there, so your data is persisted if you stop and restart the Docker container.
+Redis will create a folder `redisdata` and write the append-only file there, so your data is persisted if you stop and restart the Docker container.
 
 ### Loading the Game Data
 
@@ -43,7 +43,11 @@ Data loaded!
 $
 ```
 
+You only need to do this once.
+
 ### Starting the Server
+
+To start the game server:
 
 ```bash
 $ npm run dev
@@ -78,7 +82,9 @@ $
 
 ### Playing the Game
 
-Use the arrow keys to move around.  Red doors are locked until you have found the appropriate number of keys.  Find all 3 keys and unlock the door in the room you started in to escape.  Touching a flag teleports you to a random other room.
+Press space to start, then use the arrow keys to move your character.  Red doors are locked until you have found the appropriate number of keys.  Touch a red door to find out how many keys are required, or pass through it if you have enough keys.
+
+Find all 3 keys and unlock the door in the room you started in (room 0) to escape.  Touching a flag teleports you to a random other room.
 
 At the end of the game, you'll see how long you took to complete the challenge, and how many times you moved between rooms.
 
