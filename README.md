@@ -2,7 +2,7 @@
 
 This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).  It makes use of the [RedisJSON](https://redisjson.io) module from [Redis Labs](https://redislabs.com).
 
-TODO GIF OF THE GAME...
+![Demo of the game running](redis_kaboom_game.gif)
 
 ## Setup
 
