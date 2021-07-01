@@ -2,20 +2,26 @@ const express = require('express');
 const path = require('path');
 const Redis = require('ioredis');
 
+// Redis configuration.
 const PORT = process.env.PORT||8080;
 const REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1'; 
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 
 const app = express();
+
+// Connect to Redis.
 const redis = new Redis({
   host: REDIS_HOST,
   port: REDIS_PORT,
   password: REDIS_PASSWORD 
 });
 
+// Keep our Redis keys in a namespace.
 const getRedisKeyName = n => `kaboom:${n}`;
 
+// We'll use this key a lot to get data about rooms, stored
+// in Redis as a JSON document.
 const ROOM_KEY_NAME = getRedisKeyName('rooms');
 
 // Serve the front end statically from the 'public' folder.
