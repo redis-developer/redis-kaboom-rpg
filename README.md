@@ -108,9 +108,9 @@ TODO
 
 This game uses the following Redis data types and features:
 
-* JSON (using the RedisJSON module)
-* Streams
-* Sets
-* Key expiry
-
-TODO more detail.
+* JSON (using the RedisJSON module): TODO
+* Streams: Each new game gets its own Stream, and each time the player enters a new room an entry is written to the Stream.  At the end of the game, data from the Stream is used to determine:
+  * How many times the player entered a room (using the `XLEN` command).
+  * How long the player took to complete the game (each Stream entry is timestamped, so we can calculate the game duration as the difference between the timestamps of the first and last entries).  For this we use the `XRANGE` and `XREVRANGE` commands.
+* Sets: TODO
+* Key expiry: TODO
