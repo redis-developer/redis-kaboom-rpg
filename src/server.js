@@ -70,7 +70,7 @@ app.get('/api/room/:gameId/:roomNumber', async (req, res) => {
   redis.xadd(getRedisKeyName(`moves:${gameId}`), '*', 'roomEntry', roomNumber);
 
   // Get the room details for this room.
-  const roomDetails = JSON.parse(await redis.call('JSON.GET', ROOM_KEY_NAME, `.[${roomNumber}]`));
+  const roomDetails = JSON.parse(await redis.call('JSON.GET', ROOM_KEY_NAME, `[${roomNumber}]`));
 
   // Does this room have a key in it for this specific game?
   const roomHasKey = await redis.sismember(getRedisKeyName(`keylocations:${gameId}`), roomNumber);
