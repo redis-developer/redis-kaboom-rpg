@@ -94,7 +94,11 @@ TODO...
 
 ### Project Structure
 
-TODO
+The project consists of a Node.js back end that has API routes for some of the game logic and a static server for the front end.
+
+The back end code lives in the `src` folder, along with the data loader code, used to load the game room map into Redis.  It uses the Express framework.  Redis connectivity is handled using the ioredis client.
+
+The front end is written in JavaScript using Kaboom.js and the Bulma CSS framework.  It lives in the `public` folder.
 
 ### Working with Kaboom.js
 
@@ -102,4 +106,11 @@ TODO
 
 ### Using Redis as a Data Store
 
-TODO
+This game uses the following Redis data types and features:
+
+* JSON (using the RedisJSON module)
+* Streams
+* Sets
+* Key expiry
+
+TODO more detail.
