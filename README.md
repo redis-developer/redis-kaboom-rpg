@@ -108,9 +108,9 @@ TODO
 
 This game uses the following Redis data types and features:
 
-* JSON (using the RedisJSON module): TODO
-* Streams: Each new game gets its own Stream, and each time the player enters a new room an entry is written to the Stream.  At the end of the game, data from the Stream is used to determine:
+* **JSON (using the RedisJSON module)**: The tile map for each level (describing where the walls, doors, keys, flags and player's initial position are) is stored in Redis in a single key using RedisJSON.  The data loader uses the `JSON.SET` command to store the data, and the Node.js back end retrieves the map for a given room with the `JSON.GET` command.  The data is stored as a JSON array in Redis, and we use the `JSON.ARRLEN` command whenever we need to know how many rooms are in the map (for example when choosing a random room to teleport the user to when they touch a flag).
+* **Streams**: Each new game gets its own Stream, and each time the player enters a new room an entry is written to the Stream.  At the end of the game, data from the Stream is used to determine:
   * How many times the player entered a room (using the `XLEN` command).
   * How long the player took to complete the game (each Stream entry is timestamped, so we can calculate the game duration as the difference between the timestamps of the first and last entries).  For this we use the `XRANGE` and `XREVRANGE` commands.
-* Sets: TODO
-* Key expiry: TODO
+* **Sets**: TODO
+* **Key expiry**: We use the `EXPIRE` command to ensure that keys associated with each game are removed from Redis after a day.  This ensures that we don't have uncontrolled data growth in Redis, for example because the player abandons the game.  When the player wins the game, keys are tidied up immediately using the `DEL` command.
