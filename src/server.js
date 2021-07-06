@@ -117,7 +117,8 @@ app.get('/api/endgame/:gameId', async (req, res) => {
 
   // Tidy up, delete the stream and key locations keys as 
   // we don't need them any more.
-  redis.del(gameMovesKey, getRedisKeyName(`keylocations:${gameId}`));
+  redis.del(gameMovesKey);
+  redis.del(getRedisKeyName(`keylocations:${gameId}`));
 
   console.log(`Game ${gameId} has ended.`);
 
