@@ -1,4 +1,4 @@
-# Redis Kaboom RPG Type Game
+# Redis Kaboom RPG Game
 
 This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).  It makes use of the [RedisJSON](https://redisjson.io) module from [Redis Labs](https://redislabs.com).
 
