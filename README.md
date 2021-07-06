@@ -9,7 +9,7 @@ This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [No
 To run this game, you'll need [Docker](https://www.docker.com/) (or a local Redis instance, version 5 or higher with the RedisJSON module installed) and [Node.js](https://nodejs.org/) (use the current LTS version).  First, clone the repo and install the dependencies:
 
 ```bash
-$ git clone https://github.com/simonprickett/redis-kaboom-rpg.git
+$ git clone https://github.com/redis-developer/redis-kaboom-rpg.git
 $ cd redis-kaboom-rpg
 $ npm install
 ```
