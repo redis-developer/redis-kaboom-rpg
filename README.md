@@ -107,7 +107,190 @@ The front end is written in JavaScript using [Kaboom.js](https://kaboomjs.com/) 
 
 ### Working with Kaboom.js
 
-TODO
+[Kaboom.js](https://kaboomjs.com/) describes itself as "...a JavaScript library that helps you make games fast and fun!".  It renders games as a set of scenes in a HTML `<canvas>` element, the ID of and size of which can be configured, along with some other properties:
+
+```javascript
+const k = kaboom({
+  global: true, // imports all kaboom functions to global namespace.
+  scale: 3, // pixel scale.
+  clearColor: [0, 0, 0, 1], // black background.
+  canvas: document.getElementById('game'), // which canvas to render in.
+  width: 180, // width of the canvas.
+  height: 180 // height of the canvas.
+});
+```
+
+Each screen in a game is called a "scene" in Kaboom.  Our game has three sorts of scene:
+
+1. The `start` scene: this is shown when the game is first loaded, and encourages the player to press space to start a new game.
+2. The `play` scene: used to render the room that the player is currently in, and handle player movement and collisions with other game objects (doors, flags, walls, keys).
+3. The `winner` scene: used to dispay game stats once the player has defeated the game by collecting three keys and exiting through the locked door in room 0.
+
+The `start` and `winner` scenes have static text based layout.  Kaboom provides a `scene` function to define a new scene, and other utility functions.  Here's the complete definition of the `start` scene, which displays some centered text and waits for the space button to be pressed:
+
+```javascript
+scene('start', () => {
+  keysHeld = [];
+
+  add([
+    text('press space to begin!', 6), // 6 = font size.
+    pos(width() / 2, height() / 2),
+    origin('center'),
+  ]);
+
+  keyPress('space', () => {
+    newGame();  // a function run when space is pressed.
+  });
+});
+```
+
+To start a game, we use the provided `start` function, passing it the name of a scene:
+
+```javascript
+start('start');
+```
+
+The `start` scene is then rendered.  To change to another scene, we add logic that calls the `go` function, providing the name of the next scene:
+
+```javascript
+scene('start', () => {
+  ...
+
+  keyPress('space', () => {
+    go('play', 0); // Go the the 'play' scene, passing room ID 0 as a parameter.
+  });
+});
+```
+
+There are 31 rooms in the maze for our game, and all of them are rendered using a single scene named `play`.  This takes a room ID as a parameter, and uses that to retrieve the room's map from the back end which in turn gets it from Redis.  Let's look at features of Kaboom that help enable this...
+
+First, a scene definition takes a function as its parameter.  This defines what's in the scene, plus any logic.  Here, our `play` scene has an `async` function parameter and the first thing it does it makes a request to the back end to get the map for the room it's been asked to render:
+
+```javascript
+scene('play', async (roomNumber) => { 
+  // Get the room details from the server.
+  const res = await fetch(`/api/room/${gameId}/${roomNumber}`);
+  const roomDetails = await res.json();
+```
+
+Each room's details contain an encoded tile map where different characters represent different graphics in the room.  Kaboom provides sprite loading functionality, allowing us to use images as sprites and lay them out like tiles.  Here, I'm loading some images:
+
+```javascript
+loadSprite('player', 'sprites/player.png');
+loadSprite('wall', 'sprites/wall.png');
+loadSprite('key', 'sprites/key.png');
+loadSprite('flag', 'sprites/flag.png');
+loadSprite('door', 'sprites/door.png');
+loadSprite('lockeddoor', 'sprites/lockeddoor.png');
+```
+
+Kaboom's [`addLevel` function](https://kaboomjs.com/#addLevel) takes the room layout expressed as an array of characters (see the next section for details) and a series of objects describing which sprite to use for each character and any additional properties.  It then renders this layout into the canvas and assigns each tile the appropriate properties.  For example:
+
+```javascript
+const roomConf = {
+  '@': [
+    sprite('player'),
+    'player'
+  ],
+  '=': [
+    sprite('wall'),
+    solid()
+  ],
+  'k': [
+    sprite('key'),
+    'key',
+    solid()
+  ],
+  'f': [
+    sprite('flag'),
+    'flag',
+    solid()
+  ]
+```
+
+Now, each `@` character in the room layout becomes the player's sprite, each `=` a solid wall and so on.  For our game, I chose to represent doors as the numbers 1..9 and give them extra properties such as whether they are locked or not.  These are added to the `roomConf` array dynamically:
+
+```javascript
+[
+  // Use the 'lockeddoor' sprite if the door's locked.
+  sprite(door.keysRequired > 0 ? 'lockeddoor' : 'door'),
+  'door',
+  // Extra properties to store about this door - need
+  // these when the player touches it to determine what
+  // to do then.
+  {
+    leadsTo: door.leadsTo,
+    keysRequired: door.keysRequired,
+    isEnd: door.isEnd || false
+  },
+  solid()
+]
+```
+
+Player movement is handled by describing how the player should move (x, y) when each of the cursor keys is pressed:
+
+```javascript
+const directions = {
+  'left': vec2(-1, 0),
+  'right': vec2(1, 0),
+  'up': vec2(0, -1),
+  'down': vec2(0, 1)
+};
+```
+
+`vec2` is a Kaboom function.  Each direction is then associated with a `keyDown` event handler which calls Kaboom's `move` function on the player's sprite object:
+
+```
+for (const direction in directions) {
+  keyDown(direction, () => {
+    // Move the player.
+    player.move(directions[direction].scale(60));
+  });
+}
+```
+
+The Kaboom `scale` function adjusts the speed at which the movement happens.  The real game code also handles `keyPress` events for each cursor - the callback for these deals with tidying up any transient on screen messaging e.g. as the player moves away from a locked door having been told they don't yet hold enough keys.
+
+We also need to detect collisions between the player and other game objects (keys, flags, doors).  Kaboom provides a simple API for this.  For example, when the player touches a flag, we provide a function containing the logic describing what to do:
+
+```javascript
+  player.overlaps('flag', async () => {
+    // Go to a random room number.          
+    const res = await fetch('/api/randomroom');
+    const roomDetails = await res.json();
+    go('play', roomDetails.room);
+  });
+```
+
+The code above asks the back end application for a random room number and receives a response that looks like `{room: 22}`.  It then tells Kaboom to move to the `play` scene for that room.  So, when the player touches a flag... they're teleported to another room (or maybe back to the one they're already in).  The game code for this has additional logic that creates a camera spin effect too.
+
+There's no need to provide code for when the player collides with a wall, as we don't need to take any specific action.  Kaboom knows that players can't walk over or through walls as we declared them `solid` and that's all we need to say about them.
+
+The game tracks keys that the player has found using a global `keysHeld` array, containing the room ID(s) that the key(s) were found in.  When a player touches a door, we can then figure out if they have enough keys to open it or not:
+
+```javascript
+player.overlaps('door', (d) => {
+  // Wait a short time before revealing what is going to happen.
+  wait(0.3, ()=> {
+    // Does opening this door require more keys than the player holds?
+    if (d.keysRequired && d.keysRequired > keysHeld.length) {
+      showMsg(`You need ${d.keysRequired - keysHeld.length} more keys!`);
+      camShake(10);
+    } else {
+      // Does this door lead to the end state, or another room?
+      if (d.isEnd) {
+        go('winner');
+      } else {
+        go('play', d.leadsTo);
+      }
+    }
+  });
+});
+```
+
+If the player doesn't hold sufficient keys to open the door, Kaboom's `camShake` function is used to shake the camera and provide visual feedback that the door can't be opened.  If they do have enough keys, they'll be taken to the next room or the `winner` scene if this door is the end of the maze.  Kaboom's `wait` function is equivalent to a `setTimeout` in JavaScript, and is used to provide a small dramatic pause.
+
+These are the main things you need to know to build a game with Kaboom.  The code for the game is in `static/js/game.js` and contains a few more nuances than we covered here..
 
 ### Using Redis as a Data Store
 
