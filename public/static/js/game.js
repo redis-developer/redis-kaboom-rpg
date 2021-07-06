@@ -168,7 +168,7 @@ window.onload = function () {
     });
 
     // What to do when the player touches a flag.
-    player.overlaps('flag', () => {
+    player.overlaps('flag', async () => {
       // Go to a random room number and spin the 
       // camera around and around.
       let angle = 0.1;
