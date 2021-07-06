@@ -23,7 +23,7 @@
         "keysRequired": 3
       },
       "3": {
-        "leadsTo": 3
+        "leadsTo": 31
       }
     }
   },
