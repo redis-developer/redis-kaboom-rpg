@@ -184,7 +184,7 @@ loadSprite('door', 'sprites/door.png');
 loadSprite('lockeddoor', 'sprites/lockeddoor.png');
 ```
 
-Kaboom's [`addLevel` function](https://kaboomjs.com/#addLevel) takes the room layout expressed as an array of characters (see the next section for details) and a series of objects describing which sprite to use for each character and any additional properties.  It then renders this layout into the canvas and assigns each tile the appropriate properties.  For example:
+Kaboom's [`addLevel` function](https://kaboomjs.com/#addLevel) takes the room layout expressed as an array of characters (see the "Using Redis as a Data Store" section for details) and a series of objects describing which sprite to use for each character and any additional properties.  It then renders this layout into the canvas and assigns each tile the appropriate properties.  For example:
 
 ```javascript
 const roomConf = {
