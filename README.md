@@ -4,6 +4,10 @@ This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [No
 
 ![Demo of the game running](redis_kaboom_game.gif)
 
+Here's the drawing I made of the map while designing the game:
+
+![Redis Kaboom RPG Game Map](redis_rpg_map.jpg)
+
 ## Setup
 
 To run this game, you'll need [Docker](https://www.docker.com/) (or a local Redis instance, version 5 or higher with the RedisJSON module installed) and [Node.js](https://nodejs.org/) (use the current LTS version).  First, clone the repo and install the dependencies:
