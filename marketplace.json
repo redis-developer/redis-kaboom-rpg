@@ -1,0 +1,22 @@
+{
+    "app_name": "Redis Kaboom RPG Game",
+    "description": "A role playing maze game with Redis, the Kaboom.js game framework, Express.js and Bulma.",
+    "hidden": "true",
+    "rank": "99",
+    "type": "Full App",
+    "contributed_by": "Redis Labs",
+    "repo_url": "https://github.com/redis-developer/redis-kaboom-rpg",
+    "download_url": "https://github.com/redis-developer/redis-kaboom-rpg/archive/refs/heads/main.zip",
+    "hosted_url": "",
+    "quick_deploy": "false",
+    "deploy_buttons": [],
+    "language": ["JavaScript", "Express"],
+    "redis_commands": ["JSON.SET", "JSON.GET", "JSON.ARRLEN", "SADD", "SISMEMBER", "SCARD", "SMEMBERS", "XADD", "XRANGE", "XREVRANGE"],
+    "redis_features": ["sets", "json"],
+    "redis_modules": ["RedisJSON"],
+    "app_image_urls": [],
+    "youtube_url": "",
+    "special_tags": [],
+    "verticals": ["Gaming"],
+    "markdown": "https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/README.md"
+}
