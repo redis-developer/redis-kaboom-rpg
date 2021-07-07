@@ -4,9 +4,6 @@ This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [No
 
 ![Demo of the game running](https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/redis_kaboom_game.gif)
 
-Here's the drawing I made of the map while designing the game:
-
-![Redis Kaboom RPG Game Map](https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/redis_rpg_map.jpg)
 
 ## Setup
 
