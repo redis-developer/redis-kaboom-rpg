@@ -2,11 +2,11 @@
 
 This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).  It makes use of the [RedisJSON](https://redisjson.io) module from [Redis Labs](https://redislabs.com).
 
-![Demo of the game running](https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/blob/main/redis_kaboom_game.gif)
+![Demo of the game running](https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/redis_kaboom_game.gif)
 
 Here's the drawing I made of the map while designing the game:
 
-![Redis Kaboom RPG Game Map](https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/blob/main/redis_rpg_map.jpg)
+![Redis Kaboom RPG Game Map](https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/redis_rpg_map.jpg)
 
 ## Setup
 
