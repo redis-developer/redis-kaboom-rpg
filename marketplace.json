@@ -20,7 +20,7 @@
     
     "language": ["JavaScript", "Express"],
     "redis_commands": ["JSON.SET", "JSON.GET", "JSON.ARRLEN", "SADD", "SISMEMBER", "SCARD", "SMEMBERS", "XADD", "XRANGE", "XREVRANGE"],
-    "redis_features": ["sets", "json"],
+    "redis_features": [],
     "redis_modules": ["RedisJSON"],
     "app_image_urls": ["https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/screenshots/screenshot1.png", "https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/screenshots/screenshot2.png"],
     "youtube_url": "",
