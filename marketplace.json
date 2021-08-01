@@ -5,6 +5,7 @@
     "type": "Full App",
     "contributed_by": "Redis Labs",
     "repo_url": "https://github.com/redis-developer/redis-kaboom-rpg",
+    "preview_image_url": "https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/master/images/app_preview_image.png",
     "download_url": "https://github.com/redis-developer/redis-kaboom-rpg/archive/refs/heads/main.zip",
     "hosted_url": "",
     "quick_deploy": "false",
