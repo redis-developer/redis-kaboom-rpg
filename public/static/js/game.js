@@ -140,7 +140,7 @@ window.onload = function () {
 
     // What to do when the player touches a door.
     player.overlaps('door', (d) => {
-      wait(0.3, ()=> {
+      wait(0.3, () => {
         // Does opening this door require more keys than the player holds?
         if (d.keysRequired && d.keysRequired > keysHeld.length) {
           showMsg(`You need ${d.keysRequired - keysHeld.length} more keys!`);
