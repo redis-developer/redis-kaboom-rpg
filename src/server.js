@@ -62,6 +62,32 @@ app.get('/api/newgame', async (req, res) => {
   res.json({ gameId: gameId });
 });
 
+// Get JSON array of all currently active game IDs.
+app.get('/api/activegames', async (req, res) => {
+
+  // Scan through all keys in the stream starting with "kaboom:moves".
+  const stream = redis.scanStream({
+    match: 'kaboom:moves:*'
+  });
+
+  const gameIds = [];
+
+  stream.on('data', (keys) => {
+    // Extract the gameId from the key and append to gameIds array.
+    keys.forEach((key) => gameIds.push(key.split(':')[2]));
+  });
+
+  stream.on('end', () => {
+    res.status(200).json({
+      data: {
+        gameIds,
+        length: gameIds.length
+      },
+      status: 'success',
+    })
+  })
+});
+
 // Get details for a specified room number from Redis.
 app.get('/api/room/:gameId/:roomNumber', async (req, res) => {
   const { gameId, roomNumber }  = req.params;
