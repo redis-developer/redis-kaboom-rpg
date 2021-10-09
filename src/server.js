@@ -90,12 +90,12 @@ app.get('/api/activegames', async (req, res) => {
 
 // Get details for a specified room number from Redis.
 app.get('/api/room/:gameId/:roomNumber', async (req, res) => {
-  const { gameId, roomNumber }  = req.params;
+  const { gameId, roomNumber } = req.params;
 
-  const minRoomNumber = 0
+  const minRoomNumber = 0;
   const roomCount = JSON.parse(await redis.call('JSON.ARRLEN', ROOM_KEY_NAME));
-  const maxRoomNumber = roomCount - 1
-  const roomNumberInteger = parseInt(roomNumber)
+  const maxRoomNumber = roomCount - 1;
+  const roomNumberInteger = parseInt(roomNumber);
   if (roomNumberInteger < minRoomNumber || roomNumberInteger > maxRoomNumber) {
     console.log(`/api/room/:gameId/:roomNumber called with invalid room number of ${roomNumber}`)
     return res.status(400).send('Invalid room number')
@@ -131,7 +131,27 @@ app.get('/api/randomroom/', async (req, res) => {
 // End the current game and get the stats.
 app.get('/api/endgame/:gameId', async (req, res) => {
   const { gameId } = req.params;
+
+  // Check the format of the gameId in the request
+  if (isNaN(gameId) || !/^[1-9]+[0-9]*$/.test(gameId)) {
+    console.log(`/api/endgame/:gameId called with invalid gameId: ${gameId}.`);
+    return res.status(400).send('Invalid gameId specified, should be a whole number greater than zero');
+  }
+
+  // Check for gameIds that could only exist in the future
+  if (gameId > Date.now()) {
+    console.log(`/api/endgame/:gameId called with future gameId: ${gameId}.`);
+    return res.status(400).send('Time travelling not allowed, this game hasn\'t started yet!');
+  }
+
   const gameMovesKey = getRedisKeyName(`moves:${gameId}`);
+
+  // Does this gameMovesKey (still) exist?
+  const gameMovesKeyExists = await redis.exists(gameMovesKey);
+  if (!gameMovesKeyExists) {
+    console.log(`Request for invalid or completed gameId: ${gameId}.`);
+    return res.status(400).send('Game not found, invalid gameId or game has ended');
+  }
 
   // How many times did they enter a room (length of stream minus 1 for
   // the start event).
