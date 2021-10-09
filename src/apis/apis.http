@@ -1,0 +1,8 @@
+###
+# Api to get gameIds of active games
+# {API} /api/activegames
+# {Returns} { gameIds: String[], length: Number }
+
+GET http://localhost:8080/api/activegames
+
+
