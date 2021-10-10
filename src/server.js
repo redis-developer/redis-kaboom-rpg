@@ -93,7 +93,7 @@ app.get('/api/room/:gameId/:roomNumber', async (req, res) => {
   const { gameId, roomNumber }  = req.params;
 
   const minRoomNumber = 0
-  const roomCount = JSON.parse(await redis.call('JSON.ARRLEN', ROOM_KEY_NAME));
+  const roomCount = JSON.parse(await redis.call('JSON.ARRLEN', ROOM_KEY_NAME, '.'));
   const maxRoomNumber = roomCount - 1
   const roomNumberInteger = parseInt(roomNumber)
   if (roomNumberInteger < minRoomNumber || roomNumberInteger > maxRoomNumber) {
