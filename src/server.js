@@ -4,7 +4,7 @@ const Redis = require('ioredis');
 
 // Redis configuration.
 const PORT = process.env.PORT||8080;
-const REDIS_HOST = process.env.REDIS_HOST || 'redis'; 
+const REDIS_HOST = process.env.REDIS_HOST || '127.0.0.1'; 
 const REDIS_PORT = process.env.REDIS_PORT || 6379;
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 
