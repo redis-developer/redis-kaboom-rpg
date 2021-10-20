@@ -17,20 +17,39 @@ $ cd redis-kaboom-rpg
 $ npm install
 ```
 
-### Redis Setup
+### Docker setup 
 
-This game uses Redis as a data store.  The code assumes that Redis is running on localhost port 6379.  You can configure an alternative Redis host and port by setting the `REDIS_HOST` and `REDIS_PORT` environment variables.  If your Redis instance requires a password, supply that in the `REDIS_PASSWORD` environment variable.  You'll need to have the RedisJSON module installed.
-
-You can also use Docker to get a Redis instance with RedisJSON:
+ With Docker - you need to have Docker installed and there are no other requirements. You can use Docker to get a Redis instance with RedisJSON:
 
 ```bash
 $ docker-compose up -d
-Creating network "redis-kaboom-rpg_default" with the default driver
-Creating redis_kaboom ... done
+   ⠿ Network redis-kaboom-rpg_default  Created
+   ⠿ Container redis_kaboom            Started
+   ⠿ Container node_kaboom             Started
 $
 ```
 
 Redis creates a folder named `redisdata` (inside the `redis-kaboom-rpg` folder that you cloned the GitHub repo to) and writes its append-only file there.  This ensures that your data is persisted periodically and will still be there if you stop and restart the Docker container.
+
+Note that when using Docker, there is no need to load the game data as this is done for you. Once the containers are running you should be able to start a game simply by pointing the browser at http://localhost:8080/. 
+
+### Stopping Redis (Docker)
+
+If you started Redis using `docker-compose`, stop it as follows when you are done playing the game:
+
+```bash
+$ docker-compose down
+  Container node_kaboom             Removed
+  Container redis_kaboom            Removed
+  Network redis-kaboom-rpg_default  Removed
+$
+```
+
+### Redis Setup (without Docker)
+
+Without Docker - you will need Redis 5 or higher, the RedisJSON module and Node.js (current LTS version recommended)
+
+This game uses Redis as a data store.  The code assumes that Redis is running on localhost port 6379. You can configure an alternative Redis host and port by setting the `REDIS_HOST` and `REDIS_PORT` environment variables.  If your Redis instance requires a password, supply that in the `REDIS_PASSWORD` environment variable.  You'll need to have the RedisJSON module installed.
 
 ### Loading the Game Data
 
@@ -76,17 +95,6 @@ If the server logs an error similar to this one, then Redis isn't running on the
 
 To stop the Node.js server, press Ctrl-C.
 
-### Stopping Redis (Docker)
-
-If you started Redis using `docker-compose`, stop it as follows when you are done playing the game:
-
-```bash
-$ docker-compose down
-Stopping redis_kaboom ... done
-Removing redis_kaboom ... done
-Removing network redis-kaboom-rpg_default
-$
-```
 
 ### Playing the Game
 
