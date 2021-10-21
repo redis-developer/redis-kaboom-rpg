@@ -6,6 +6,7 @@ This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [No
 
 [Watch the video on YouTube!](https://www.youtube.com/watch?v=cowIZWASJNs)
 
+Since making the video and GIF above, we changed out the sprite images as part of our Hacktoberfest initiative.  If you're looking for the originals that you see in the video, they're in this repo in `public/sprites/original`.
 
 ## Setup
 
