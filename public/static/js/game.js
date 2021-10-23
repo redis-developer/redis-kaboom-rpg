@@ -2,7 +2,7 @@ window.onload = function () {
   // Initialize Kaboom...
   const k = kaboom({
     global: true,
-    scale: 3,    
+    scale: 3,
     clearColor: [0, 0, 0, 1],
     canvas: document.getElementById('game'),
     width: 180,
@@ -17,6 +17,10 @@ window.onload = function () {
   loadSprite('flag', 'sprites/flag.png');
   loadSprite('door', 'sprites/door.png');
   loadSprite('lockeddoor', 'sprites/lockeddoor.png');
+
+  loadSound("key", "static/sounds/key");
+  loadSound("wall", "static/sounds/wall");
+  loadSound("flag", "static/sounds/flag ");
 
   // Globals to remember which rooms the player found 
   // keys in and the ID of the game they're playing.
@@ -66,6 +70,7 @@ window.onload = function () {
       ],
       '=': [
         sprite('wall'),
+        "wall",
         solid()
       ],
       'k': [
@@ -138,6 +143,7 @@ window.onload = function () {
 		  });
 	  }
 
+
     // What to do when the player touches a door.
     player.overlaps('door', (d) => {
       wait(0.3, () => {
@@ -156,8 +162,13 @@ window.onload = function () {
       });
     });
 
+    player.overlaps("wall", (e) => {
+      play("wall");
+    });
+
     // What to do when the player touches a key.
     player.overlaps('key', (k) => {
+      play("key");
       destroy(k);
       showMsg('You got a key!');
       // Remember the player has this key, so we don't
@@ -169,6 +180,7 @@ window.onload = function () {
 
     // What to do when the player touches a flag.
     player.overlaps('flag', async () => {
+      play('flag');
       // Go to a random room number and spin the 
       // camera around and around.
       let angle = 0.1;
