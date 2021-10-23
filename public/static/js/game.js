@@ -18,9 +18,11 @@ window.onload = function () {
   loadSprite('door', 'sprites/door.png');
   loadSprite('lockeddoor', 'sprites/lockeddoor.png');
 
-  loadSound("key", "static/sounds/key");
-  loadSound("wall", "static/sounds/wall");
-  loadSound("flag", "static/sounds/flag ");
+  // Load the various sound effects
+  loadSound("key", "sounds/key");
+  loadSound("wall", "sounds/wall");
+  loadSound("flag", "sounds/flag");
+  loadSound("door","sounds/door");
 
   // Globals to remember which rooms the player found 
   // keys in and the ID of the game they're playing.
@@ -153,6 +155,7 @@ window.onload = function () {
           camShake(10);
         } else {
           // Does this door lead to the end state, or another room?
+          play('door');
           if (d.isEnd) {
             go('winner');
           } else {
