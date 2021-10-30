@@ -47,13 +47,14 @@
         "leadsTo": 2
       },
       "2": {
-        "leadsTo": 0
+        "leadsTo": 0,
+        "keysRequired": 1
       },
       "3": {
         "leadsTo": 6
       },
       "4": {
-        "leadsTo":3
+        "leadsTo": 3
       }
     }
   },
@@ -390,7 +391,8 @@
         "leadsTo": 14
       },
       "3": {
-        "leadsTo": 21
+        "leadsTo": 21,
+        "keysRequired": 2
       }
     }
   },
@@ -521,11 +523,15 @@
       "=          =",
       "=   ====  k=",
       "=          =",
-      "============"
+      "======2====="
     ],
     "doors": {
       "1": {
-        "leadsTo": 15
+        "leadsTo": 15,
+        "keysRequired":2
+      },
+      "2": {
+        "leadsTo": 39
       }
     }
   },
@@ -629,7 +635,8 @@
         "leadsTo": 24
       },
       "3": {
-        "leadsTo": 2
+        "leadsTo": 2,
+        "keysRequired": 1
       }
     }
   },
@@ -649,13 +656,14 @@
     ],
     "doors": {
       "1": {
-        "leadsTo": 25
+        "leadsTo": 13
       },
       "2": {
         "leadsTo": 20
       },
       "3": {
-        "leadsTo": 27
+        "leadsTo": 27,
+        "keysRequired":1
       }
     }
   },
@@ -676,7 +684,7 @@
     "doors": {
       "1": {
         "leadsTo": 26,
-        "keysRequired": 2
+        "keysRequired":1
       }
     }
   },
@@ -817,7 +825,8 @@
         "leadsTo": 32
       },
       "2": {
-        "leadsTo": 2
+        "leadsTo": 2,
+        "keysRequired": 1
       },
       "3": {
         "leadsTo": 25
@@ -923,7 +932,7 @@
       "=  =    =  =",
       "=          =",
       "=          =",
-      "=     @ f  1",
+      "3     @ f  1",
       "=          =",
       "= k        =",
       "=  =    =  =",
@@ -936,7 +945,33 @@
       },
       "2": {
         "leadsTo": 5
+      },
+      "3":{
+        "leadsTo":39
       }
     }
-  }
+  },
+  { "_comment": 39
+    ,    "layout": [
+          "=====2======",
+          "=          =",
+          "=  =    =  =",
+          "=          =",
+          "=          =",
+          "=     @ f  1",
+          "=          =",
+          "= k        =",
+          "=  =    =  =",
+          "=          =",
+          "============"
+        ],
+        "doors": {
+          "1": {
+            "leadsTo": 38
+          },
+          "2": {
+            "leadsTo": 21
+          }
+        }
+      }
 ]
