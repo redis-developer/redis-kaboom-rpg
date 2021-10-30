@@ -44,11 +44,11 @@
     ],
     "doors": {
       "1": {
-        "leadsTo": 2
+        "leadsTo": 2,
+        "keysRequired": 1
       },
       "2": {
-        "leadsTo": 0,
-        "keysRequired": 1
+        "leadsTo": 0
       },
       "3": {
         "leadsTo": 6
@@ -80,7 +80,8 @@
         "leadsTo":33
       },
       "3":{
-        "leadsTo":25
+        "leadsTo":25,
+        "keysRequired": 1
       }
     }
   },
