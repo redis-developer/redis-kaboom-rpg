@@ -1,6 +1,6 @@
 # Redis Kaboom RPG Game
 
-This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).  It makes use of the [RedisJSON](https://redisjson.io) module from [Redis Inc](https://redis.com).
+This is an RPG maze type game built with [Kaboom.js](https://kaboomjs.com/), [Node.js](https://nodejs.org/) and [Redis](https://redis.io).  It makes use of the [Redis JSON](https://redisjson.io) module from [Redis Inc](https://redis.com).
 
 ![Demo of the game running](https://raw.githubusercontent.com/redis-developer/redis-kaboom-rpg/main/redis_kaboom_game.gif)
 
@@ -10,7 +10,7 @@ Since making the video and GIF above, we changed out the sprite images as part o
 
 ## Setup
 
-To run this game, you'll need [Docker](https://www.docker.com/) (or a local Redis instance, version 5 or higher with the RedisJSON module installed) and [Node.js](https://nodejs.org/) (use the current LTS version).  First, clone the repo and install the dependencies:
+To run this game, you'll need [Docker](https://www.docker.com/) (or a local Redis instance, version 5 or higher with Redis JSON installed) and [Node.js](https://nodejs.org/) (use the current LTS version).  First, clone the repo and install the dependencies:
 
 ```bash
 $ git clone https://github.com/redis-developer/redis-kaboom-rpg.git
@@ -18,9 +18,9 @@ $ cd redis-kaboom-rpg
 $ npm install
 ```
 
-### Docker setup 
+### Docker setup
 
- With Docker - you need to have Docker installed and there are no other requirements. You can use Docker to get a Redis instance with RedisJSON:
+ With Docker - you need to have Docker installed and there are no other requirements. You can use Docker to get a Redis instance with Redis JSON:
 
 ```bash
 $ docker-compose up -d
@@ -32,7 +32,7 @@ $
 
 Redis creates a folder named `redisdata` (inside the `redis-kaboom-rpg` folder that you cloned the GitHub repo to) and writes its append-only file there.  This ensures that your data is persisted periodically and will still be there if you stop and restart the Docker container.
 
-Note that when using Docker, there is no need to load the game data as this is done for you. Once the containers are running you should be able to start a game simply by pointing the browser at http://localhost:8080/. 
+Note that when using Docker, there is no need to load the game data as this is done for you. Once the containers are running you should be able to start a game simply by pointing the browser at http://localhost:8080/.
 
 ### Stopping Redis (Docker)
 
@@ -48,13 +48,13 @@ $
 
 ### Redis Setup (without Docker)
 
-Without Docker - you will need Redis 5 or higher, the RedisJSON module and Node.js (current LTS version recommended)
+Without Docker - you will need Redis 5 or higher, Redis JSON and Node.js (current LTS version recommended)
 
-This game uses Redis as a data store.  The code assumes that Redis is running on localhost port 6379. You can configure an alternative Redis host and port by setting the `REDIS_HOST` and `REDIS_PORT` environment variables.  If your Redis instance requires a password, supply that in the `REDIS_PASSWORD` environment variable.  You'll need to have the RedisJSON module installed.
+This game uses Redis as a data store.  The code assumes that Redis is running on localhost port 6379. You can configure an alternative Redis host and port by setting the `REDIS_HOST` and `REDIS_PORT` environment variables.  If your Redis instance requires a password, supply that in the `REDIS_PASSWORD` environment variable.  You'll need to have Redis JSON installed.
 
 ### Loading the Game Data
 
-Next, load the game map into Redis.  This stores the map data from the `game_map.json` file in Redis, using RedisJSON:
+Next, load the game map into Redis.  This stores the map data from the `game_map.json` file in Redis, using Redis JSON:
 
 ```bash
 $ npm run load
@@ -66,7 +66,7 @@ Data loaded!
 $
 ```
 
-You only need to do this once.  Verify that the data loaded by ensuring that the key `kaboom:rooms` exists in Redis and is a RedisJSON document:
+You only need to do this once.  Verify that the data loaded by ensuring that the key `kaboom:rooms` exists in Redis and is a Redis JSON document:
 
 ```bash
 127.0.0.1:6379> type kaboom:rooms
@@ -179,7 +179,7 @@ There are 31 rooms in the maze for our game, and all of them are rendered using 
 First, a scene definition takes a function as its parameter.  This defines what's in the scene, plus any logic.  Here, our `play` scene has an `async` function parameter and the first thing it does it makes a request to the back end to get the map for the room it's been asked to render:
 
 ```javascript
-scene('play', async (roomNumber) => { 
+scene('play', async (roomNumber) => {
   // Get the room details from the server.
   const res = await fetch(`/api/room/${gameId}/${roomNumber}`);
   const roomDetails = await res.json();
@@ -267,7 +267,7 @@ We also need to detect collisions between the player and other game objects (key
 
 ```javascript
   player.overlaps('flag', async () => {
-    // Go to a random room number.          
+    // Go to a random room number.
     const res = await fetch('/api/randomroom');
     const roomDetails = await res.json();
     go('play', roomDetails.room);
@@ -308,7 +308,7 @@ These are the main things you need to know to build a game with Kaboom.  The cod
 
 This game uses the following Redis data types and features:
 
-* **JSON (using the RedisJSON module)**: The tile map for each level (describing where the walls, doors, keys, flags and player's initial position are) is stored in Redis in a single key using RedisJSON.  The data loader uses the `JSON.SET` command to store the data in a Redis key named `kaboom:rooms`.  The Node.js back end retrieves the map for a given room with the `JSON.GET` command.  Room data is stored as a JSON array in Redis.  Each room's data is an object in the array: room 0 is the 0th array element, room 1 the first and so on.  We use the `JSON.ARRLEN` command whenever we need to know how many rooms are in the map (for example when choosing a random room to teleport the user to when they touch a flag).  Each room's data looks like this:
+* **JSON (using Redis JSON)**: The tile map for each level (describing where the walls, doors, keys, flags and player's initial position are) is stored in Redis in a single key using Redis JSON.  The data loader uses the `JSON.SET` command to store the data in a Redis key named `kaboom:rooms`.  The Node.js back end retrieves the map for a given room with the `JSON.GET` command.  Room data is stored as a JSON array in Redis.  Each room's data is an object in the array: room 0 is the 0th array element, room 1 the first and so on.  We use the `JSON.ARRLEN` command whenever we need to know how many rooms are in the map (for example when choosing a random room to teleport the user to when they touch a flag).  Each room's data looks like this:
 
 ```json
 {
